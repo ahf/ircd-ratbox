@@ -1,0 +1,11 @@
+GUNGLINE <user@host> :<reason>
+
+-- if glines are enabled --
+Attempts to remove a global IRC-network wide ban on
+<user@host> for the reason <reason>.
+
+It takes three different opers on three different
+servers to do the same GUNGLINE within a short
+interval, to remove a triggered GLINE.
+
+- Requires Oper Priv: G and U

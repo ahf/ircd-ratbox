@@ -1,0 +1,7 @@
+ADMINDLINE <ip> :<reason>
+
+Adds a DLINE which will deny any connections from the IP address
+supplied, with the special exception that the DLINE can only
+be removed by administrators.
+
+- Requires Oper Priv: KA

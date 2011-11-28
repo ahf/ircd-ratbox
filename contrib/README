@@ -1,0 +1,66 @@
+$Id: README 27289 2011-11-01 20:36:13Z jilles $
+
+This directory contains modules and patches that have been contributed
+by other people, or aren't suitable for including into the 
+ircd-ratbox tree.  The coding team do not officially support the contrib/ 
+modules, or guarantee any of them will actually work.
+
+
+Modules
+-------
+
+m_clearchan.c  - CLEARCHAN - clears all users out of a channel and joins person
+                             issuing command
+                 Syntax: CLEARCHAN <channel> 
+
+m_flags.c      - FLAGS - csircd like support of changing usermodes
+                 Syntax:  FLAGS :+OWALLOPS -SWALLOPS
+
+m_force.c      - FORCE - forces a user to either part or join a channel with
+                         an optional status (@%+)
+                 Syntax: FORCEJOIN <nick> [status]<channel>
+                         FORCEPART <nick> <channel>
+
+m_mkpasswd.c   - MKPASSWD - generate a DES or MD5 encryption of a password
+                 Syntax:  MKPASSWD <plaintext> [MD5|DES]
+
+m_ojoin.c      - OJOIN - Join a channel through any modes or limits with 
+                         an optional status (@%+)
+                 Syntax: OJOIN [status]<channel>
+
+m_okick.c      - OKICK - Kick from a channel without op status
+                 Syntax: OKICK <channel> <nick>
+
+m_olist.c      - OLIST - Lists channels like LIST, but shows hidden
+                         channels. Oper only of course.
+
+m_opme.c       - OPME - Allows an admin to op themselves in an opless channel
+                 Syntax: OPME <channel>
+
+m_webirc.c     - Makes CGI:IRC users appear as coming from their real host
+                 See m_webirc.c for configuration information.
+
+m_42.c		- 42 - The Answer to Life, the Universe, and Everything.
+
+example_module.c - An example module to be used for creating your own.
+                   Syntax: TEST
+
+
+Spy Modules
+-----------
+
+The following are the 'spy' parts, accessible via the +y usermode
+
+spy_admin_notice.c   - Spy on clients doing ADMIN
+spy_info_notice.c    - Spy on clients doing INFO
+spy_links_notice.c   - Spy on clients doing LINKS
+spy_motd_notice.c    - Spy on clients doing MOTD
+spy_stats_notice.c   - Spy on clients doing all STATS
+spy_stats_p_notice.c - Spy on clients doing STATS p only
+spy_whois_notice.c   - Spy on local clients who WHOIS you.
+spy_whois_notice_global.c - Spy on remote clients who WHOIS you.
+
+Note: if you have both spy_stats_notice.c and spy_stats_p_notice.c loaded
+you will get two messages.
+
+Kilroy says hello

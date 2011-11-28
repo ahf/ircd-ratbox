@@ -1,0 +1,7 @@
+ADMINKLINE <user@host> :[reason] [| oper reason]
+
+Adds a KLINE to the kline database which will ban the
+specified user from using this server, with the special
+exception that the KLINE can only be removed by administators.
+
+- Requires Oper Priv: KA

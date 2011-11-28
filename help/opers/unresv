@@ -1,0 +1,7 @@
+UNRESV <channel|nick>
+
+-- Remove a RESV on a channel or nick
+Will attempt to remove the resv for the given
+channel/nick.
+
+- Requires Oper Priv: Q

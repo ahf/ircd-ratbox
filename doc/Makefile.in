@@ -1,0 +1,62 @@
+# $Id$
+CC		= @CC@
+INSTALL		= @INSTALL@
+INSTALL_BIN	= @INSTALL_PROGRAM@
+INSTALL_DATA	= @INSTALL_DATA@
+INSTALL_SUID	= @INSTALL_PROGRAM@ -o root -m 4755
+RM		= @RM@
+MV		= @MV@
+RM		= @RB_RM@
+CP		= @CP@
+TOUCH		= @TOUCH@
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+exec_suffix	= @exec_suffix@
+bindir		= @bindir@
+libexecdir	= @libexecdir@
+confdir		= @confdir@
+localstatedir	= @localstatedir@
+# Change this later! -- adrian
+moduledir	= @moduledir@
+automoduledir	= @moduledir@/autoload
+
+CONFS		= example.conf example.efnet.conf
+
+install-mkdirs:
+	-@if test ! -d $(DESTDIR)$(confdir); then \
+		echo "mkdir -p $(confdir)"; \
+		mkdir $(DESTDIR)$(confdir); \
+	fi
+
+install: install-mkdirs build
+	@echo "ircd: installing example config files ($(CONFS))"
+	@for i in $(CONFS); do \
+		if test -f $(DESTDIR)$(confdir)/$$i; then \
+			$(MV) $(DESTDIR)$(confdir)/$$i $(DESTDIR)$(confdir)/$$i.old; \
+		fi; \
+		$(INSTALL_DATA) $$i $(DESTDIR)$(confdir); \
+	done
+
+	-@if test ! -f $(DESTDIR)$(confdir)/ircd.motd; then \
+		echo "ircd: installing motd file (ircd.motd)"; \
+		$(INSTALL_DATA) ircd.motd $(DESTDIR)$(confdir); \
+	fi
+
+	$(INSTALL_BIN) genssl.sh $(DESTDIR)$(confdir)
+
+	-@if test -f $(DESTDIR)$(confdir)/links.txt; then \
+		$(RM) $(DESTDIR)$(confdir)/links.txt; \
+	fi
+
+all:
+build:
+
+clean:
+
+depend:
+
+lint:
+
+distclean:
+	${RM} -f Makefile

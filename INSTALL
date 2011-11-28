@@ -1,0 +1,210 @@
+   ircd-ratbox INSTALL Document
+
+   $Id: INSTALL 27221 2011-10-12 01:25:49Z dubkat $
+
+   Copyright (c) 2001 by ircd-hybrid team
+   Copyright (c) 2002-2011 ircd-ratbox development team
+
+     ----------------------------------------------------------------------
+
+          __               __                 __   __                
+         |__|.----.----.--|  |___.----.---.-.|  |_|  |--.-----.--.--.
+         |  ||   _|  __|  _  |___|   _|  _  ||   _|  _  |  _  |_   _|
+         |__||__| |____|_____|   |__| |___._||____|_____|_____|__.__|
+                                                                 
+
+     +--------------------------------------------------------------------+
+     | IMPORTANT: for those who don't bother reading docs...              |
+     | If you are upgrading from ANY VERSION of ircd-ratbox, see the      |
+     | instructions under UPGRADING, #3. YES, THIS MEANS YOU!             |
+     ` ------------------------------------------------------------------ '
+
+       Read the ChangeLog file to find out about the exciting 
+       new features in this version. Other good reads are 
+       doc/whats-new.txt, BUGS, doc/example.conf, and README.FIRST.
+
+       An example.conf for EFnet is in doc/ with the values "approved" 
+       on 12 December 2001.
+
+
+
+  > QUICK START
+
+   1. Configure (see below under CONFIGURE OPTIONS for more details):
+
+     I.   Large networks (with thousands of users):
+          ./configure --prefix=/home/user/ircd
+
+     II.  Small networks (with only a few hundred users or less):
+          ./configure --prefix=/home/user/ircd --enable-small-net
+
+     III. Configure ircd-ratbox for running with minimal resources
+          on a 64bit VPS (Virtual Private Server). This creates 
+          a 32bit IRCD which takes up less memory:
+          CFLAGS="-m32" ./configure --prefix=/home/user/ircd \
+          --enable-small-net
+
+   2. Build:
+
+     I.  On linux systems: make
+     II. On *BSD systems: gmake
+
+
+   3. Install:
+
+    I.  make install (or gmake install on *BSD)
+    II. make install-strip (strips out debugging code for smaller 
+        binaries and modules)
+
+        DO NOT SUBMIT BUGS IF YOU HAVE STRIPPED THE IRCD OF DEBUGGING 
+        SYMBOLS. WE WILL NOT BE ABLE TO HELP YOU.
+
+
+
+                 
+  > ADDITIONAL CONFIGURE OPTIONS
+
+   Note: There are some special optional parameters to the configure
+         script that some admins may wish to use.
+ 
+   *  --enable-kqueue 
+            Use the superior kqueue(2) system call as opposed to 
+            the default poll(2). This is currently only available
+            on FreeBSD 4.1 or higher, and should be auto-detected.
+
+   *  --enable-devpoll
+            Enable the superior /dev/poll support on Solaris. 
+            Linux /dev/poll is broken and will not work with this
+            option. Do not use this unless you comprehend the implications.
+
+   * --enable-openssl
+            Enable the openssl dependent crypto functions. 
+            This will allow CHALLENGE to work and encrypted links. 
+            On systems where the configure script can automatically 
+            detect OpenSSL, this option is not necessary. 
+            If configure cannot find OpenSSL, you must specify a 
+            path with this option.
+            (--enable-openssl=/path/to/openssl)
+
+            If you plan on using SSL encrypted client connections, 
+            or encrypted links, you may wish to run 
+            /path/to/ircd/bin/genssl.sh to generate self-signed 
+            certificates.
+
+   * --enable-ipv6
+            Enable IPv6 support. This should be auto-detected.
+
+   * --enable-static
+            Enable a static-linked ircd. You will not be able to unload, 
+            or reload modules. You probably don't want this.
+
+   * --enable-assert 
+            Enable some of the debugging code. This should NOT be used 
+            on production servers. Doing so is a performance hit, 
+            and can cause cores from things that shouldn't normally happen.
+
+   * --enable-small-net
+            Tunes the server for smaller networks by reducing the 
+            startup memory footprint. This should really only be used 
+            for *small* networks, as this tends to be a performance hit 
+            on larger networks.
+
+   * --with-nicklen
+            Sets the maximum NICK length. Note that this MUST be 
+            consistant across your entire network.
+
+   * --enable-services 
+            If your network runs ratbox-services, this enables extra 
+            code to actually make it useful on your ircd. 
+            Please read doc/services.txt for more information.
+
+
+
+  > UPGRADING
+
+   1. If this is a clean install of ircd-ratbox, you may skip this section.
+   
+   2. Upgrading from ircd-ratbox-2.x, ircd-hybrid-7.x
+
+      If you have an older version of ircd-ratbox or ircd-hybrid, and 
+      you have klines, dlines, resvs, and xline config files, keep 
+      reading.
+      
+      ircd-ratbox no longer uses flat-file based configs for these 
+      types of entries, instead they are stored in a database. To 
+      prevent accidental clobbering, or leaving behind old, unsupported 
+      modules it would be best to install ratbox into a clean location.
+
+      After you have finished installing the ircd, you will likey wish 
+      to import your old ban files.  ircd-ratbox-3 includes a tool 
+      to manage the database. Importing, backing up, error checking, 
+      and reclaiming lost space are all supported. For more information, 
+      run /path/to/ircd/bin/bantool with no arguments.
+
+      I.  import old ban configs (pretend mode):
+          /path/to/ircd/bin/bantool -i -d -p /path/to/oldircd/etc
+
+          If everything looks good, you will want to actually let 
+          bantool do the import.
+
+      II. import old ban configs:
+          /path/to/ircd/bin/bantool -i -d /path/to/oldircd/etc
+
+
+   3. Upgrading from another version ircd-ratbox-3.x
+
+      * IMPORTANT: EVERY TIME YOU UPGRADE ircd-ratbox-3 YOU NEED TO 
+        ISSUE THIS COMMAND. FAILURE TO DO SO CAN CAUSE YOUR IRCD TO CORE!
+
+      I. /path/to/ircd/bin/bantool -u
+
+
+
+
+  > HOW TO GET HELP
+
+   Send Check or Money Order to... just kidding! 
+   (However free beer is always appreciated)
+   
+   * For Bug Reports, visit: http://bugs.ratbox.org
+   
+   * For General Question, you may ask your question
+     on #ratbox on EFnet.
+   
+   If you do fix anything, however, please post a context or unified
+   diff on http://bugs.ratbox.org so the fixes can be incorporated into
+   the next release of ircd-ratbox. 
+   
+   If ratbox crashes on you, please submit a bug report, and include the
+   gdb backtrace or corefile on http://bugs.ratbox.org
+
+   DISCUSSION: There is a low-volume mailing list for discussion of 
+   ratbox issues, To subscribe, visit:
+       http://lists.ratbox.org/cgi-bin/mailman/listinfo/ircd-ratbox
+       
+     ----------------------------------------------------------------------
+
+  > NOTES
+
+   The best way to get a backtrace of the core is to follow this sequence of
+   instructions:
+
+   1. Change to the directory containing the core file
+
+   2. Run gdb on the binary and the core file. With an unmodified 
+      ircd-ratbox installation, an example command line is below 
+      (in the /path/to/ircd directory). This will be useless 
+      if you used 'make install-strip'.
+
+      $ gdb bin/ircd ircd.core
+
+   3. At the "(gdb)" prompt, enter the command "bt"
+
+   4.  Save the output of the backtrace command and submit it to
+       http://bugs.ratbox.org
+
+   5.  Be sure to save the ircd binary, the modules, and the core file 
+       in a safe place in case the developers need to look deeper 
+       than a backtrace provides.
+
+

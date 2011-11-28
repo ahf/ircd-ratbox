@@ -1,0 +1,6 @@
+ADMINXLINE <gecos> :<reason>
+
+Bans by gecos (aka 'real name') field, with the special exception
+that the XLINE can only be removed by administrators.
+
+- Requires Oper Priv: XA

@@ -1,0 +1,30 @@
+$Id: SVN-Access 27237 2011-10-14 03:58:46Z dubkat $
+
+So, we've gone and switched to subversion.
+
+The ircd-ratbox subversion repository is available for anonymous access.
+
+One can checkout the stable tree(currently 2.2.x) as follows:
+
+svn co http://svn.ratbox.org/svnroot/ircd-ratbox/branches/RATBOX_2_2
+
+Or the testing tree(3.0.x):
+
+svn co http://svn.ratbox.org/svnroot/ircd-ratbox/branches/RATBOX_3_0
+
+Or if you prefer the bleeding edge stuff:
+
+svn co http://svn.ratbox.org/svnroot/ircd-ratbox/trunk
+
+Of course at any given time the SVN tree could be broken.  If you are
+planning on using the SVN tree you very well may want to be on the mailing
+list, you can subscribe at:
+
+http://lists.ratbox.org/cgi-bin/mailman/listinfo/ircd-ratbox
+
+Direct bug reports to: http://bugs.ratbox.org
+
+
+
+
+

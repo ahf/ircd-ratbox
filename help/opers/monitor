@@ -1,0 +1,33 @@
+MONITOR + nick[,nick2]*
+-----------------------
+Adds the given list of nicknames to the list of nicknames being monitored.
+
+If any of the nicknames being added are online, the server will generate
+RPL_MONONLINE numerics listing those nicknames that are online.
+
+If any of the nicknames being added are offline, the server will generate
+RPL_MONOFFLINE numerics listing those nicknames that are offline.
+
+MONITOR - nick[,nick2]*
+-----------------------
+Removes the given list of nicknames from the list of nicknames being
+monitored.  No output will be returned for use of this command.
+
+MONITOR C
+---------
+Clears the list of nicknames being monitored.  No output will be returned
+for use of this command.
+
+MONITOR L
+---------
+Outputs the current list of nicknames being monitored.  All output will use
+RPL_MONLIST, and the output will be terminated with RPL_ENDOFMONLIST
+
+MONITOR S
+---------
+Outputs for each nickname in the list being monitored, whether the client is
+online or offline.  All nicks that are online will be sent using 
+RPL_MONONLINE, all nicks that are offline will be sent using RPL_MONOFFLINE.
+The list will be terminated with RPL_ENDOFMONLIST.
+
+Chances are you will rarely need to use this command directly

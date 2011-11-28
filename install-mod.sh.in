@@ -1,0 +1,25 @@
+#!/bin/sh
+# $Id: install-mod.sh.in 25279 2008-04-24 15:50:29Z androsyn $
+SHELL="@SHELL@"
+CP="@INSTALL@"
+top_builddir="@top_builddir@"
+LT_OBJDIR="@LT_OBJDIR@"
+if test "$#" != "2"; then
+	echo "Incorrect number of arguments";
+	exit 1
+fi
+
+SHLIBEXT="@SHLIBEXT@"
+OBJECT="${1}"
+OBJBASE=`basename ${1}`
+SRCDIR=`echo ${OBJECT}|sed -es/${OBJBASE}//`
+DEST="${2}"
+SOBASE=$(echo ${OBJBASE} | sed -e's/\.la$//')
+TARGETOBJ="${SOBASE}${SHLIBEXT}"
+
+RUN="${CP} ${SRCDIR}${LT_OBJDIR}/${TARGETOBJ} ${DEST}/${TARGETOBJ}"
+
+echo "Installing ${OBJECT} as ${DEST}/${TARGETOBJ}"
+$RUN
+
+

@@ -1,0 +1,32 @@
+MODE <channel> <+|-><modes> [parameters]
+
+CHANNELMODE - DESCRIPTION
+------------------------------------------------------------------------
+NO PARAMETERS:
+     +n     - No external messages.  Only channel members may talk in
+              the channel.
+     +t     - Ops Topic.  Only opped (+o) users may set the topic.
+     +s     - Secret.  Channel will not be shown in /whois and /list etc.
+     +p     - Private.  Disables /knock to the channel.
+     +m     - Moderated.  Only opped/voiced users may talk in channel.
+     +i     - Invite only.  Users need to be /invite'd or match a +I to
+              join the channel.
+
+WITH PARAMETERS:
+     +k     - Key.  Requires users to issue /join #channel KEY to join.
+              PARAMS: /mode #channel +k key
+     +l     - Limit.  Impose a maximum number of LIMIT people in the channel.
+              PARAMS: /mode #channel +l limit
+     +v     - Voice.  Allows a user to talk in a +m channel.  Noted by +nick.
+              PARAMS: /mode #channel +v nick
+     +o     - Op.  Allows a user full control over the channel.
+              PARAMS: /mode #channel +o nick
+     +b     - Ban.  Prevents a user from entering the channel, based on a 
+              nick!ident@host match.
+              PARAMS: /mode #channel +b nick!user@host
+     +e     - Exempt.  Allows a user to join a channel even if they are 
+              banned (+b), based on a nick!ident@host match.
+              PARAMS: /mode #channel +e nick!user@host
+     +I     - Invite Exempt.  Allows a user to join a +i channel without an 
+              invite, based on a nick!user@host match.
+              PARAMS: /mode #channel +I nick!user@host

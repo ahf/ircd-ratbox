@@ -1,0 +1,199 @@
+
+This is the current release version of the 'testing' tree of ircd-ratbox.
+
+NOTE: Whilst every effort has been made to make sure this code is usable, it
+      is still not classified as a stable release.  You assume full
+      responsibility for running this on a production network.
+
+If you are upgrading from 2.2, you must read doc/whats-new-3.0.txt
+If you are upgrading from 2.1, you must read doc/whats-new-2.2.txt
+If you are upgrading from 2.0, you must also read doc/whats-new-2.1.txt
+If you are upgrading from 1.x, you must also read doc/whats-new-2.0.txt
+
+-- ircd-ratbox-3.0.1
+- call rb_helper_close on bandb errors to kill off old bandb processes
+- report correct files/line numbers for spoof warnings
+- sid in the serverinfo struct should be 4 bytes, not 3
+- rebuild the included ircd_lexer.c 
+- fix ports and /dev/poll on solaris
+- report libratbox version on -version and /info
+- libratbox version info includes ssl info
+- fix installing when using install-sh
+- reenable ziplinks + ssl
+- fix a gnutls related core dump
+- add support for a serverinfo::bandb setting for the ban database
+- report adding throttles when an oper is set umode +r
+- report throttle stats in /stats T
+
+-- ircd-ratbox-3.0.0
+- fix a crash with the the global cidr code
+- fix a core dump in bantool if bantool cannot open the database
+- report failure to open logfiles in a more useful way
+- check to see if we have both read and write access to the ban database
+- fix a build error on OS X Leopard
+
+-- ircd-ratbox-3.0.0rc3
+- fix a leak that would cause the ircd to leak 128 bytes per connection
+- a few minor cleanups of cases where malloc/free were used instead of
+  rb_malloc/rb_free
+- keep people from passing absurd non-numeric values to --with-nicklen
+- have stats T report cumulative connection times as a 64bit integer
+  and keep track of those values as a 64bit integer as well so they do
+  not wrap
+
+-- ircd-ratbox-3.0.0rc2
+- log ERROR commands to file regardless of hide_error_messages setting 
+- restrict JOIN 0 to only allow 0 by itself, no multiple zeros or zeros
+  before or after commas
+- honor -logfile command line option
+- fix timerfd_create check
+
+-- ircd-ratbox-3.0.0rc1
+- fix a bug in comment parsing in the config file
+- have bandb honor -basedir option
+- if ssld to work on win32 should you ever desire such a thing and a 
+  few other minor win32 fixes
+- fix up a few things so that the source code builds with gcc -pedantic
+- do not abort configure if the AC_CHECK_SQLITE3 check fails
+- drop configure option for ssl only channels, this is now controlled by
+  channel {} use_sslonly option
+- attempt to override FD_SETSIZE when using select, and if this cannot 
+  be overriden, lower maxconnections
+- fix signalfd code on 32bit platforms
+- add support for timerfd_create event handling on linux systems with 
+  new enough kernels and glibc
+- fix our fake rb_sockaddr_storage so that it actually compiles
+- Add some work arounds to avoid OPENSSL_applink on some platforms
+
+
+-- ircd-ratbox-3.0.0beta12
+- add support for ssl only oper and auth blocks
+- do not show whowas ip info if the ip is 0
+- fix admindline to actually work
+- fix a compile error with vhost6_dns when no ipv6 exists
+- fix a logic inversion with duplicate dline checking
+- fix a minor buffer overrun in the identd checking code
+- default bursting of who set topics to on
+- tidy up some of the identd checking code
+- don't try to release a closed connection 
+- change a few instances where localtime was being used instead of 
+  UTC
+- do not bother logging ERROR commands from non-servers
+- fix a crash in bantool
+- fix an issue in libratbox with storing event names incorrectly
+- put a bit of sanity checking in rb_vsnprintf_append
+- some portability cleanups 
+
+-- ircd-ratbox-3.0.0beta11
+- remove the remains of servlink_path from the config file parser
+- userlog now logs the users IP address as well as their hostname
+- whowas now supports showing the users IP address as well as 
+  hostname.  the same rules apply to showing the whowas IP as 
+  apply to showing whois_actually and uses the same numeric.
+- double the size of the whowas array for large networks.  this 
+  comes at a hit of about 2MB or so of memory.
+- really, really fix the block heap garbage collection code 
+
+
+-- ircd-ratbox-3.0.0beta10
+- fix a case a passing a NULL to match()
+- properly fix a crash in the block heap garbage collection code
+
+-- ircd-ratbox-3.0.0beta9
+- fix a hang with the resolver using epoll
+- add dns source port randomization
+- add a vhost_dns/vhost6_dns option to control which IP addresses the
+  resolver binds to
+- make /stats A work again
+- cleanup some remains of the old ident helper
+- work around a core dump in libratbox with accepting sockets that 
+  appear to be open in the fd hash and log this condition
+- fix a buffer overrun in the arc4random code when there is no ssl
+  library
+- fix a memory alignment issue on sparc where the ircd would crash
+  with a SIGBUS accessing long long variables that were allocated
+  via the block allocator
+
+
+-- ircd-ratbox-3.0.0beta8
+- some cleanups in the checksplit code
+- some cleanups in the /trace code
+- show reasons for failed outbound SSL handshakes to opers
+- log ssl errors for servers and handshakes in serverlog
+- make sqlite3 checking more robust
+- change the resolver to use the code from charybdis instead of adns
+- fix identd checking so it works again
+- fix a bug where the ircd could stop reading from the client on the CAP 
+  command
+- add some functions for random number generation for the nossl case in
+  libratbox
+
+-- ircd-ratbox-3.0.0beta7
+- my release building script manage to not include libratbox, oops
+
+-- ircd-ratbox-3.0.0beta6
+- change -lock klines and friends to now be ADMINKLINE etc
+- default to only supporting TS6 
+- fix remote kline reasons
+- have sqlite3 checking use pkg-config when possible
+- move identd checking back into the ircd, this seems to have been more
+  problematic than what it was worth
+- add experimental gnutls support - note that CHALLENGE does not work when using just
+  gnutls 
+- some helpfile cleanups
+- fix compile error when zlib is not found
+- remove some restrictions on k/d/x/resv reasons that are no longer needed
+
+-- ircd-ratbox-3.0.0beta5
+- fix things so that --enable-assert=soft compiles again
+- fix a typo in mkpasswd
+- add admin only -lock klines, doing KLINE -lock will allow admins to
+  add klines that normal opers cannot remove. 
+- modify bantool to have a -u option that updates the database schema.
+  if upgrading from previous betas, this needs to be run to support
+  the -lock kline changes.
+- fix cidr klines so they work again
+- update included sqlite3 to the latest revision
+- allow kline/unkline of a bare host or address, this gets treated as 
+  *@host
+- report when an invalid kline is passed, instead of silently ignoring
+- fix --enable-assert=soft
+- fix libratbox build on OS X and others
+
+-- ircd-ratbox-3.0.0beta4
+- some configure/makefile changes that are useful for package maintainers
+- various bantool fixes
+- fix a bug with the command hash that could cause the ircd to crash
+- fix an ident checking bug that would sometimes cause users to get the 
+  wrong ident
+- fix an ssld crash due to mangling connection ids incorrectly
+- fix matching of cidr masks where the bit length was 0 
+- implement throttling of ssl connection handshake flooding 
+- fix build on bsd platforms that lack EVFILT_TIMER
+- fix kqueue from sometimes dropping updates
+- fix a possible crash with ssl connections closing quickly
+- perserve errno so that connect failures report the correct error
+
+-- ircd-ratbox-3.0.0beta3
+- fix an issue with CAP END releasing clients before it should
+- report bandb errors in a useful fashion
+- strip tabs when reading from help/motd etc
+- override default_max_clients if it is == 0
+- fix ssl issue with wanting reads/writes
+- fix some cases where /list can freeze a client
+- stop libltdl from installing an empty include directory
+- improve SIGCHLD handling in the ircd
+
+-- ircd-ratbox-3.0.0beta2
+- honor global_cidr setting
+- fix a bug in bantool that improperly parsed X-lines with spaces them
+- fix user@host spoofs
+- fix default maxclients to work correctly
+- fix libratbox build with openssl disabled
+- don't spin on openssl accepts when there is no data
+
+-- ircd-ratbox-3.0.0beta1
+- No release notes, see doc/whats-new-3.0.txt
+
+$Id: RELNOTES 26322 2008-12-17 03:08:36Z androsyn $
+

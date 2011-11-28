@@ -1,0 +1,19 @@
+$Id: CREDITS 27309 2011-11-12 20:48:41Z dubkat $
+ 
+ircd-ratbox is an evolution where ircd-hybrid left off around version 7-rc1.  
+Currently the ircd-ratbox team consists of the following developers:
+ 
+AndroSyn, Aaron Sethman <androsyn -at- ratbox.org>
+anfl, Lee Hardy <lee -at- leeh.co.uk>
+jilles, Jilles Tjoelker <jilles -at- stack.nl>
+
+Special thanks for support, code and ideas to:
+
+dubkat, Daniel Reidy <dubkat -at- gmail.com>
+Hwy, W. Campbell <wcampbel -at- botbay.net>
+larne, Edward Brocklesby <ejb -at- sdf.lonestar.org>
+ 
+Of course our work is based on the work of many, many others over the past
+10 or so years since irc has existed, including the work done by the Hybrid
+team, our thanks goes to them.
+ 

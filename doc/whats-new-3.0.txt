@@ -1,0 +1,60 @@
+The following is a list of noteworthy changes between ircd-ratbox 2.2.x
+and ircd-ratbox-3.0.
+
+Installation
+------------
+ o Configure argument --with-topiclen has been removed, topic length
+   setting is now within the ircd.conf file.
+ o Performance options like --enable-poll and --enable-kqueue are no longer
+   necessary, appropriate options are selected and can be changed later.
+ o Optional SSL support to enable encrypted connections between clients
+   and servers, as well as server to server links.
+
+
+Config
+------
+ o The configuration file parser has been reworked enabling bin/ircd -conftest
+   to output more useful error messages and improve error localisation. 
+ o cidr_bitlen config setting has been replaced with cidr_ipv4_bitlen and
+   cidr_ipv6_bitlen.
+ o Some options are no longer used and have been removed.
+ o Listen block has a new sslport option for specifying ssl ports.
+ o New SSL settings to specify SSL keys and the number of SSL processes
+   to start up.
+ o Bundled sqlite3 for handling and storing k/x/d lines.
+ o New C version of bantool (thanks to dubkat) included to convert
+   k/x/d line .conf files into the sqlite3 DB file formats now used.
+ o Support for global CIDR limits.
+ o Idletime checking option removed from config, server no longer does any
+   client idletime checks.
+ o SSL server connections and ZIPLINKS are mutually exclusive.  OpenSSL
+   can typically enable zlib compression for TLSv1 connections.
+ o By default, if no aftype is specified in listen {} blocks, it will bind
+   to ipv4 only.
+
+Opers
+-----
+ o Added adminwall allowing admins to broadcast messages to each other in the
+   same manner as wallops for opers.
+ o Notify opers and log when the ident helper is started or restarted.
+ o Server /rehash options for restarting ident and resolver daemons.
+
+Misc
+----
+ o Creation of new library archive 'libratbox' - allowing low level code to
+   be split out giving a better architecture and increasing flexibility.
+ o Significant code and infrastructure changes designed to make things a lot
+   cleaner as well as some minor performance enhancements.
+ o Tidying up and improved IPv6 related code.
+ o Support for force nick changes.
+ o identd and dns resolver adapted into separate processes enabling ratbox to
+   make better use of available resources on SMP systems. Also creates a more
+   portable build system.
+ o New ssld and bandb processes for handling SSL connections and ban checking.
+ o Updated and modified bundled sqlite3 application to version 3.5.4 for use
+   with ircd-ratbox.
+ o Added SAVE generation (forced nick change on collision) from charybdis.
+ o Remove the unknown clients per ip checking, replaced with connection
+   throttling.
+ o TS6 is required for directly linking servers.
+

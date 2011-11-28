@@ -1,0 +1,6 @@
+$Id: README 25125 2008-03-16 14:12:14Z androsyn $
+
+A directory of support programs for ircd.
+
+mkpasswd.c      - makes password for O lines
+genssl.sh	- creates a self signed certificate and DH parameters file

@@ -1,0 +1,47 @@
+# $Id: whats-new-2.2.txt 23020 2006-09-01 18:20:19Z androsyn $
+
+The following is a list of major changes between ircd-ratbox-2.1 and
+ircd-ratbox-2.2.
+
+Installation
+------------
+- Rewritten installation documentation.
+- configure argument --with-maxclients is gone, we now use shell limits
+  and dynamic /set maxclients option.
+
+Config
+------
+- New option in general {};, hide_spoof_ips = yes|no;, controls whether
+  spoofed ips are hidden to all opers.
+- New option in serverinfo {};, default_max_clients = number;, sets the
+  default maximum number of clients which can be changed later via 
+  /quote set maxclients <number>
+
+Client
+------
+- Removed rate limiting of /away
+
+Oper
+----
+- TESTMASK now takes: TESTMASK <[nick!]user@host> [:<gecos>]
+  Matching against all of the fields.
+- TESTMASK can now perform ip comparisons, eg TESTMASK *@192.168.0.0/16
+- New CHANTRACE command, which will perform an ETRACE of a channel if you
+  are a member.  Operspy capable.
+- New MASKTRACE command, taking: MASKTRACE [!]<[nick!]user@host> [:<gecos>]
+  This essentially works like TESTMASK and is operspy capable.  In normal
+  usage it will actually list local clients matching the mask, when used
+  with operspy it will list all clients network wide.
+- Klines for user@1.2.3.* etc are now munged to CIDR.
+- New CHALLENGE system, see doc/challenge.txt and
+  http://respond.ircd-ratbox.org for more information.
+
+Misc
+----
+- Huge amounts of memory related cleanups.
+- CPU optimisations to iline/kline/dline hash
+- CPU optimisations to poll() network subsystem.
+- Regained rtsigio network subsystem support, primarily for linux 2.4
+- ircd -conftest option is now more "unix friendly"
+- Improved logging when we disallow a servers linking.
+- Server IP hiding is now hardcoded in.

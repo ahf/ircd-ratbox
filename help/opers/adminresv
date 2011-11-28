@@ -1,0 +1,6 @@
+ADMINRESV <channel|nick> :<reason>
+
+Reserves a channel or nickname from use.  With the special exception that
+the RESV can only be removed by administators.
+
+- Requires Oper Priv: QA
