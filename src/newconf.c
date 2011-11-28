@@ -1554,7 +1554,7 @@ conf_set_listen_aftype(confentry_t * entry, conf_t * conf, struct conf_items *it
 
 
 static void
-conf_set_listen_port_both(confentry_t * entry, conf_t * conf, struct conf_items *item, int ssl)
+conf_set_listen_port_both(confentry_t * entry, conf_t * conf, struct conf_items *item, int ssl, int websocket)
 {
 	rb_dlink_node *ptr;
 	confentry_t *xentry;
@@ -1569,7 +1569,7 @@ conf_set_listen_port_both(confentry_t * entry, conf_t * conf, struct conf_items 
 			if(listener_aftype > 0)
 				family = listener_aftype;
 #endif
-			add_listener(xentry->number, listener_address, family, ssl);
+			add_listener(xentry->number, listener_address, family, ssl, websocket);
 		}
 		else
 		{
@@ -1577,7 +1577,7 @@ conf_set_listen_port_both(confentry_t * entry, conf_t * conf, struct conf_items 
 			if(listener_aftype <= 0 && strchr(listener_address, ':') != NULL)
 				family = AF_INET6;
 #endif
-			add_listener(xentry->number, listener_address, family, ssl);
+			add_listener(xentry->number, listener_address, family, ssl, websocket);
 		}
 	}
 }
@@ -1585,13 +1585,25 @@ conf_set_listen_port_both(confentry_t * entry, conf_t * conf, struct conf_items 
 static void
 conf_set_listen_port(confentry_t * entry, conf_t * conf, struct conf_items *item)
 {
-	conf_set_listen_port_both(entry, conf, item, 0);
+	conf_set_listen_port_both(entry, conf, item, /* ssl */ 0, /* websocket */ 0);
 }
 
 static void
 conf_set_listen_sslport(confentry_t * entry, conf_t * conf, struct conf_items *item)
 {
-	conf_set_listen_port_both(entry, conf, item, 1);
+	conf_set_listen_port_both(entry, conf, item, /* ssl */ 1, /* websocket */ 0);
+}
+
+static void
+conf_set_listen_websocketport(confentry_t * entry, conf_t * conf, struct conf_items *item)
+{
+	conf_set_listen_port_both(entry, conf, item, /* ssl */ 0, /* websocket */ 1);
+}
+
+static void
+conf_set_listen_websocketsslport(confentry_t * entry, conf_t * conf, struct conf_items *item)
+{
+	conf_set_listen_port_both(entry, conf, item, /* ssl */ 1, /* websocket */ 1);
 }
 
 static struct ev_entry *cache_links_ev;
@@ -2338,6 +2350,8 @@ static struct conf_items conf_listen_table[] =
 	{ "ip",	     CF_QSTRING, conf_set_listen_address, 0, NULL },
 	{ "port",    CF_INT | CF_FLIST, conf_set_listen_port,    0, NULL},
 	{ "sslport", CF_INT | CF_FLIST, conf_set_listen_sslport, 0, NULL},
+	{ "websocketport", CF_INT | CF_FLIST, conf_set_listen_websocketport,       0, NULL},
+	{ "websocketsslport", CF_INT | CF_FLIST, conf_set_listen_websocketsslport, 0, NULL},
 	{ "aftype",  CF_STRING, conf_set_listen_aftype,	0, NULL},
 	{ "\0", 	0, 	NULL, 0, NULL}
 };

@@ -37,11 +37,12 @@ struct Listener
 	int ref_count;		/* number of connection references */
 	int active;		/* current state of listener */
 	int ssl;		/* ssl listener */
+	int websocket;		/* websocket listener */
 	struct rb_sockaddr_storage addr;
 	char vhost[HOSTLEN + 1];	/* virtual name of listener */
 };
 
-void add_listener(int port, const char *vaddr_ip, int family, int ssl);
+void add_listener(int port, const char *vaddr_ip, int family, int ssl, int websocket);
 void close_listener(struct Listener *listener);
 void close_listeners(void);
 const char *get_listener_name(struct Listener *listener);

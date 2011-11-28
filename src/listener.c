@@ -124,7 +124,8 @@ show_ports(struct Client *source_p)
 #endif
 				   IsOperAdmin(source_p) ? listener->name : me.name,
 				   listener->ref_count, (listener->active) ? "active" : "disabled",
-				   listener->ssl ? " ssl" : "");
+				   listener->ssl ? " ssl" : "",
+				   listener->websocket ? " websocket" : "");
 	}
 }
 
@@ -290,7 +291,7 @@ find_listener(struct rb_sockaddr_storage *addr)
  * the format "255.255.255.255"
  */
 void
-add_listener(int port, const char *vhost_ip, int family, int ssl)
+add_listener(int port, const char *vhost_ip, int family, int ssl, int websocket)
 {
 	struct Listener *listener;
 	struct rb_sockaddr_storage vaddr;
@@ -354,6 +355,7 @@ add_listener(int port, const char *vhost_ip, int family, int ssl)
 
 	listener->F = NULL;
 	listener->ssl = ssl;
+	listener->websocket = websocket;
 	if(inetport(listener))
 		listener->active = 1;
 	else
@@ -437,6 +439,9 @@ add_connection(struct Listener *listener, rb_fde_t *F, struct sockaddr *sai, str
 	new_client->localClient->ssl_ctl = ssl_ctl;
 	if(ssl_ctl != NULL || rb_fd_ssl(F))
 		SetSSL(new_client);
+
+	if (listener->websocket)
+		SetWebSocket(new_client);
 
 	++listener->ref_count;
 
