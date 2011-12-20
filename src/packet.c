@@ -35,6 +35,7 @@
 #include "hook.h"
 #include "send.h"
 #include "s_log.h"
+#include "websocket.h"
 
 static char readBuf[READBUF_SIZE];
 static void client_dopacket(struct Client *client_p, char *buffer, size_t length);
@@ -94,6 +95,19 @@ parse_client_queued(struct Client *client_p)
 					 LINEBUF_COMPLETE, LINEBUF_PARSED)) > 0)
 		{
 			client_dopacket(client_p, readBuf, dolen);
+		}
+	}
+	else if(IsWebSocket(client_p))
+	{
+		for (;;)
+		{
+			dolen = rb_linebuf_get(&client_p->localClient->buf_recvq, readBuf, READBUF_SIZE, LINEBUF_PARTIAL, LINEBUF_RAW);
+
+			if (dolen <= 0 || IsDead(client_p))
+				break;
+
+			client_dopacket(client_p, readBuf, dolen);
+			client_p->localClient->sent_parsed++;
 		}
 	}
 	else if(IsClient(client_p))
@@ -359,7 +373,10 @@ client_dopacket(struct Client *client_p, char *buffer, size_t length)
 	client_p->localClient->receiveB += length;
 	me.localClient->receiveB += length;
 
-	parse(client_p, buffer, buffer + length);
+	if (IsWebSocket(client_p))
+		websocket_parse(client_p, buffer, length);
+	else
+		parse(client_p, buffer, buffer + length);
 }
 
 /* flood_endgrace()

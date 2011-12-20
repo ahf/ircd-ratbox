@@ -41,6 +41,7 @@
 #include "s_log.h"
 #include "sslproc.h"
 #include "hash.h"
+#include "websocket.h"
 
 static rb_dlink_list listener_list;
 static int accept_precallback(rb_fde_t *F, struct sockaddr *addr, rb_socklen_t addrlen, void *data);
@@ -445,7 +446,10 @@ add_connection(struct Listener *listener, rb_fde_t *F, struct sockaddr *sai, str
 
 	++listener->ref_count;
 
-	start_auth(new_client);
+	if (IsWebSocket(new_client))
+		start_websocket_handshake(new_client);
+	else
+		start_auth(new_client);
 }
 
 static time_t last_oper_notice = 0;

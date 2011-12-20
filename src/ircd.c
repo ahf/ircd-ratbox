@@ -61,6 +61,8 @@
 #include "bandbi.h"
 #include "sslproc.h"
 #include "supported.h"
+#include "websocket.h"
+
 /*
  * Try and find the correct name to use with getrlimit() for setting the max.
  * number of files allowed to be open by this process.
@@ -701,6 +703,8 @@ ratbox_main(int argc, char *argv[])
 
 	init_auth();		/* Initialise the auth code - depends on global set options */
 	rehash_dns_vhost();	/* load any vhost dns binds now */
+
+	init_websocket();
 
 	if(ServerInfo.name == NULL)
 	{

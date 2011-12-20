@@ -32,6 +32,7 @@ libcore_la_SOURCES =			\
 	hash.c				\
 	hook.c				\
 	hostmask.c			\
+	http.c				\
 	http_parser.c			\
 	ircd.c				\
 	ircd_signal.c			\
@@ -57,6 +58,7 @@ libcore_la_SOURCES =			\
 	supported.c			\
 	whowas.c			\
 	version.c			\
+	websocket.c			\
 	ircd_parser.y			\
 	ircd_lexer.l                       
                         

@@ -114,6 +114,7 @@ struct Client
 
 struct _ssl_ctl;
 struct Blacklist;
+struct WebSocketRequest;
 
 struct LocalUser
 {
@@ -194,6 +195,7 @@ struct LocalUser
 	time_t last_knock;	/* time of last knock */
 	uint32_t random_ping;
 	struct AuthRequest *auth_request;
+	struct WebSocketRequest *websocket_request;
 
 	/* target change stuff */
 	void *targets[10];	/* targets were aware of */

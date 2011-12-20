@@ -513,6 +513,7 @@ dnl	AC_DEFINE([HASHSIZE], 4096, [Max number of buckets in hash tables.])
 	AC_DEFINE([CONFITEM_HEAP_SIZE], 128, [Size of the confitem heap.])
 	AC_DEFINE([MONITOR_HEAP_SIZE], 128, [Size of the monitor heap.])
 	AC_DEFINE([AUTH_HEAP_SIZE], 128, [Size of the auth heap.])
+	AC_DEFINE([WEBSOCKET_HEAP_SIZE], 128, [Size of the websocket heap.])
 	AC_DEFINE([FD_HEAP_SIZE], 128, [Size of fd heap.])
 	AC_DEFINE([AWAY_HEAP_SIZE], 128, [Size of away heap.])
 else
@@ -532,6 +533,7 @@ dnl so enable small net unless you really need this much support
         AC_DEFINE([CONFITEM_HEAP_SIZE], 1024, [Size of the confitem heap.])
 	AC_DEFINE([MONITOR_HEAP_SIZE], 1024, [Size of the monitor heap.])
 	AC_DEFINE([AUTH_HEAP_SIZE], 256, [Size of the auth heap.])
+	AC_DEFINE([WEBSOCKET_HEAP_SIZE], 256, [Size of the websocket heap.])
 	AC_DEFINE([FD_HEAP_SIZE], 1024, [Size of fd heap.])
 	AC_DEFINE([AWAY_HEAP_SIZE], 512, [Size of away heap.])
 
