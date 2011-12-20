@@ -32,6 +32,7 @@ libcore_la_SOURCES =			\
 	hash.c				\
 	hook.c				\
 	hostmask.c			\
+	http_parser.c			\
 	ircd.c				\
 	ircd_signal.c			\
 	listener.c			\
