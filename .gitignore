@@ -1,3 +1,16 @@
+*.la
+*.lo
+*.o
+*~
+
+.deps
+.libs
+
+Makefile
 Makefile.in
+
 autom4te.cache/
 configure
+
+include/setup.h
+tools/ratbox-mkpasswd
