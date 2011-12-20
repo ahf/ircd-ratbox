@@ -198,6 +198,7 @@ enum http_errno {
 #define HTTP_PARSER_ERRNO_LINE(p)       0
 #endif
 
+struct Client;
 
 struct http_parser {
   /** PRIVATE **/
@@ -230,6 +231,9 @@ struct http_parser {
 
   /** PUBLIC **/
   void *data; /* A pointer to get hook to the "connection" or "socket" object */
+
+  /* Ircd. */
+  struct Client *client;
 };
 
 
